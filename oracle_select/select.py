@@ -43,8 +43,12 @@ class DB(object):
             else:
                 c.execute(sql)
         except Exception as e:
+            c.close()
+            db.close()
             raise
+            
         c.rowfactory = makeDictFactory(c)
+        
         try:
             if fetch:
                 r = c.fetchmany(fetch)
