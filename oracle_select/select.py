@@ -63,3 +63,47 @@ class DB(object):
             del r
             c.close()
             db.close()
+
+    def iter_select(self, sql, binds=None, fetch_size=1000, max_rows=None):
+        """Select records using a generator"""
+        db = cx_Oracle.connect(self.username, self.password, self.host)
+        c = db.cursor()
+        
+        try:
+            if binds:
+                c.execute(sql, binds)
+            else:
+                c.execute(sql)
+        except Exception as e:
+            c.close()
+            db.close()
+            raise
+            
+        c.rowfactory = makeDictFactory(c)
+        
+        try:
+            if max_rows:
+                i = 0
+                while i <= max_rows:
+                    results = c.fetchmany(fetch_size)
+                    if not results:
+                        break
+                    else:
+                        rs = copy.deepcopy(results)
+                        del results
+                        i += len(rs)
+                        yield rs
+            else:
+                while True:
+                    results = c.fetchmany(fetch_size)
+                    if not results:
+                        break
+                    else:
+                        rs = copy.deepcopy(results)
+                        del results
+                        yield rs
+        except:
+            raise
+        finally:
+            c.close()
+            db.close()
