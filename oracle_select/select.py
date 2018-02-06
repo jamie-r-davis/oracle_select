@@ -64,7 +64,7 @@ class DB(object):
             c.close()
             db.close()
 
-    def iter_select(self, sql, binds=None, fetch_size=1000, max_rows=None):
+    def select_iter(self, sql, binds=None, fetch_size=1000, max_rows=None):
         """Select records using a generator"""
         db = cx_Oracle.connect(self.username, self.password, self.host)
         c = db.cursor()
