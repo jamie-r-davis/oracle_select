@@ -38,3 +38,16 @@ By default all results will be returned. Sometimes, when the result set is large
     >>> sql = """select * from ps_table"""
     >>> db.select(sql, fetch=10)  # fetch first ten results
     >>> db.select(sql, fetch=0)  # fetch all results (default)
+    
+    
+Fetch Large Datasets with a Generator
+-------------------------------------
+
+Large datasets can be retrieved using the `select_iter` method:
+
+    >>> sql = """select * from ps_large_table"""
+    >>> for chunk in db.select_iter(sql):
+    >>>    for result in chunk:
+    >>>        print(result)
+    
+Results will be returned in chunks of `fetch_size`. To limit the total number of results, set `max_rows`. By default chunks of 1,000 records will be returned until the entire result set has been consumed (`max_rows = None`).
