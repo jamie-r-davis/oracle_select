@@ -65,7 +65,22 @@ class DB(object):
             db.close()
 
     def select_iter(self, sql, binds=None, fetch_size=1000, max_rows=None):
-        """Select records using a generator"""
+        """
+        Select records in chunks using a generator.
+        
+        Parameters
+        ----------
+        sql:        The sql to execute
+        binds:      A tuple or dict of bind variables to use (default: None).
+        fetch_size: The size of the chunks to yield on each iteration.
+        max_rows:   The maximum number of rows to fetch. If None, all rows will 
+                    eventually be returned (default: None).
+                    
+        Yields
+        ------
+        A list of dicts matching the result set. Each iteration will yield a 
+        new chunk of data according to the fetch_size given.
+        """
         db = cx_Oracle.connect(self.username, self.password, self.host)
         c = db.cursor()
         
