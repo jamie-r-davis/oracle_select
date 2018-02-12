@@ -35,7 +35,6 @@ def format_list(items, parenthesis=True):
     """
     if len(items) > 1000:
         raise ValueError('Lists are limited to 1000 items.')
-    formatted_elements = 
     formatted_list = ', '.join(
         [f"'{item}'" if isinstance(item, str) else str(item) for item in items])
     if parenthesis:
