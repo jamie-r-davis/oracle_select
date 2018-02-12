@@ -24,5 +24,8 @@ setup(name='oracle_select',
       install_requires=[
           'cx_Oracle',
       ],
+      extras_require={
+        'utils': ['pandas', 'IPython']
+      },
       include_package_data=True,
       zip_safe=False)
