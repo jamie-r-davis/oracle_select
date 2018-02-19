@@ -1,3 +1,6 @@
+import pandas as pd
+
+
 def format_list(items, parenthesis=True):
     """
     Format an array into a prepared string that can be used in a SQL IN clause.
