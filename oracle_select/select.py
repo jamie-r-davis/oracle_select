@@ -1,3 +1,4 @@
+from attrdict import AttrDict
 import copy
 import cx_Oracle
 
@@ -21,22 +22,22 @@ def makeDictFactory(cursor):
                 v = arg
             read_args.append(v)
         del args
-        return dict(zip(col_names, read_args))
+        return AttrDict(dict(zip(col_names, read_args)))
     return createRow
 
 
 class DB(object):
     """Database object"""
-    
+
     def __init__(self, host, username, password):
         self.host = host
         self.username = username
         self.password = password
-        
+
     def select(self, sql, binds=None, fetch=0):
         db = cx_Oracle.connect(self.username, self.password, self.host)
         c = db.cursor()
-        
+
         try:
             if binds:
                 c.execute(sql, binds)
@@ -46,9 +47,9 @@ class DB(object):
             c.close()
             db.close()
             raise
-            
+
         c.rowfactory = makeDictFactory(c)
-        
+
         try:
             if fetch:
                 r = c.fetchmany(fetch)
@@ -67,23 +68,23 @@ class DB(object):
     def select_iter(self, sql, binds=None, fetch_size=1000, max_rows=None):
         """
         Select records in chunks using a generator.
-        
+
         Parameters
         ----------
         sql:        The sql to execute
         binds:      A tuple or dict of bind variables to use (default: None).
         fetch_size: The size of the chunks to yield on each iteration.
-        max_rows:   The maximum number of rows to fetch. If None, all rows will 
+        max_rows:   The maximum number of rows to fetch. If None, all rows will
                     eventually be returned (default: None).
-                    
+
         Yields
         ------
-        A list of dicts matching the result set. Each iteration will yield a 
+        A list of dicts matching the result set. Each iteration will yield a
         new chunk of data according to the fetch_size given.
         """
         db = cx_Oracle.connect(self.username, self.password, self.host)
         c = db.cursor()
-        
+
         try:
             if binds:
                 c.execute(sql, binds)
@@ -93,9 +94,9 @@ class DB(object):
             c.close()
             db.close()
             raise
-            
+
         c.rowfactory = makeDictFactory(c)
-        
+
         try:
             if max_rows:
                 i = 0

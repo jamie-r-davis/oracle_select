@@ -4,17 +4,16 @@ from setuptools import setup
 def readme():
     with open('README.md') as f:
         return f.read()
-        
-        
+
+
 setup(name='oracle_select',
-      version='0.1',
+      version='0.1.1',
       description='Easy interface for reading from Oracle databases',
       long_description=readme(),
       classifiers=[
         'Development Status :: 3 - Alpha',
         'License :: OSI Approved :: MIT License',
-        'Programming Language :: Python :: 3.6',
-        'Topic :: Databases :: Oracle',
+        'Programming Language :: Python :: 3.6'
       ],
       keywords='oracle cx_Oracle',
       author='Jamie Davis',
