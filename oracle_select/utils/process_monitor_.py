@@ -1,7 +1,7 @@
 import pandas as pd
 
 
-def process_monitor(db, processes, freq=5, timeout=60*60*4, on_success=None,
+def _process_monitor(db, processes, freq=5, timeout=60*60*4, on_success=None,
                   on_failure=None):
     """
     Monitor PeopleSoft Process Scheduler instances.

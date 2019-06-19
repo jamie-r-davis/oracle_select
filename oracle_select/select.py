@@ -117,7 +117,8 @@ class DB(object):
                     else:
                         rs = copy.deepcopy(results)
                         del results
-                        yield rs
+                        for result in rs:
+                            yield result
         except:
             raise
         finally:

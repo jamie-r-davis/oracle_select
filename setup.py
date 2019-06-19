@@ -7,7 +7,7 @@ def readme():
 
 
 setup(name='oracle_select',
-      version='0.1.1',
+      version='0.1.3',
       description='Easy interface for reading from Oracle databases',
       long_description=readme(),
       classifiers=[
@@ -21,6 +21,7 @@ setup(name='oracle_select',
       license='MIT',
       packages=['oracle_select'],
       install_requires=[
+          'attrdict',
           'cx_Oracle',
       ],
       extras_require={
